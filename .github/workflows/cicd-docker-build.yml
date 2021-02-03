@@ -1,0 +1,21 @@
+name: Auto Docker Builds
+
+on:
+  push:
+    branches:
+      - "**"
+    paths-ignore:
+      - docs/**.md
+      - "*.md"
+
+jobs:
+  build_docker:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Clone git repo
+        uses: actions/checkout@v1
+      - name: Docker build
+        run: |
+          export IMAGE_NAME=ghcr.io/aaronsteers/tap-mssql:build${{ github.run_number }}
+          docker build -t IMAGE_NAME .
+          docker push $IMAGE_NAME
