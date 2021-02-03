@@ -17,5 +17,5 @@ jobs:
       - name: Docker build
         run: |
           export IMAGE_NAME=ghcr.io/aaronsteers/tap-mssql:build${{ github.run_number }}
-          docker build -t IMAGE_NAME .
+          docker build -t $IMAGE_NAME .
           docker push $IMAGE_NAME
