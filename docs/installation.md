@@ -41,7 +41,7 @@ _These instructions require the [Chocolatey](chocolatey.org) package manager to 
     cd c:\Files\Source
 
     # Download the tap:
-    git clone https://github.com/singer-io/tap-mssql.git
+    git clone https://github.com/slalom/tap-mssql.git
     ```
 
 5. Test `tap-mssql` using `lein`:
