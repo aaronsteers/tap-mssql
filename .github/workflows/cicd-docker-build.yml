@@ -1,0 +1,20 @@
+name: Auto Docker Builds
+
+on:
+  push:
+    branches:
+      - "**"
+
+jobs:
+  build_docker:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Clone git repo
+        uses: actions/checkout@v1
+      - name: Docker build
+        # Ref: https://github.com/actions/starter-workflows/issues/66#issuecomment-679029894
+        run: |
+          export IMAGE_NAME=docker.pkg.github.com/${GITHUB_REPOSITORY}/tap-mssql:build${{ github.run_number }}
+          echo "${{ github.token }}" | docker login https://docker.pkg.github.com -u ${GITHUB_ACTOR} --password-stdin
+          docker build -t $IMAGE_NAME .
+          docker push $IMAGE_NAME
