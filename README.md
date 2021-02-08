@@ -48,7 +48,17 @@ When executing in production, the following patterns are generally recommended:
     bin/tap-mssql  --config config.json --sync | target-csv > state.json
     ```
 
-3. Instructions to execute using docker:
+3. Executing using the `tap-mssql` batch script (Windows only):
+
+    ```powershell
+    # Discover metadata catalog:
+    bin/tap-mssql.bat --config config.json --discover > catalog.json
+
+    # Execute sync to target-csv (for example):
+    bin/tap-mssql.bat  --config config.json --sync | target-csv > state.json
+    ```
+
+4. Instructions to execute using docker:
 
     * Build the docker image (optional):
 
