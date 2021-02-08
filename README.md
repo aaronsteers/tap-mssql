@@ -59,21 +59,21 @@ When executing in production, the following patterns are generally recommended:
     ```
 
 4. Instructions to execute using docker:
-    * ***TK - TODO: Which image name to use in place of `local/tap-mssql` below?***
-    * Build the docker image:
+
+    * Build the docker image (optional):
 
         ```bash
-        docker build -t local/tap-mssql .
+        docker build -t ghcr.io/slalom/tap-mssql:latest .
         ```
 
     * Run using docker:
 
         ```bash
         # Discover metadata catalog:
-        docker run --rm -it -v .:/home/tap-mssql local/tap-mssql --config config.json --discover > catalog.json
+        docker run --rm -it -v .:/home/tap-mssql ghcr.io/slalom/tap-mssql:latest --config config.json --discover > catalog.json
 
         # Execute sync to target-csv (for example):
-        docker run --rm -it -v .:/home/tap-mssql local/tap-mssql --config config.json --sync | target-csv > state.json
+        docker run --rm -it -v .:/home/tap-mssql ghcr.io/slalom/tap-mssql:latest --config config.json --sync | target-csv > state.json
         ```
 
 ### Other ways to run and test
