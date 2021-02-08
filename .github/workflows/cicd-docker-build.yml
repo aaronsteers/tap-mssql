@@ -12,9 +12,10 @@ jobs:
       - name: Clone git repo
         uses: actions/checkout@v1
       - name: Docker build
-        # Ref: https://github.com/actions/starter-workflows/issues/66#issuecomment-679029894
+        # Ref: https://docs.github.com/en/packages/guides/migrating-to-github-container-registry-for-docker-images#example-of-updated-workflow
         run: |
-          export IMAGE_NAME=docker.pkg.github.com/${GITHUB_REPOSITORY}/tap-mssql:build${{ github.run_number }}
-          echo "${{ github.token }}" | docker login https://docker.pkg.github.com -u ${GITHUB_ACTOR} --password-stdin
-          docker build -t $IMAGE_NAME .
-          docker push $IMAGE_NAME
+          export IMAGE_NAME=ghcr.io/${GITHUB_REPOSITORY}
+          echo "${GITHUB_ACCESS_TOKEN}" | docker login https://ghcr.io -u ${GITHUB_ACTOR} --password-stdin
+          docker pull $IMAGE_NAME:latest | true
+          docker build . -t $IMAGE_NAME:build${{ github.run_number }} --cache-from IMAGE_NAME:latest
+          docker push $IMAGE_NAME:build${{ github.run_number }}
