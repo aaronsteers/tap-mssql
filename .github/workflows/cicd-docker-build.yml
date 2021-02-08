@@ -13,6 +13,8 @@ jobs:
         uses: actions/checkout@v1
       - name: Docker build
         # Ref: https://docs.github.com/en/packages/guides/migrating-to-github-container-registry-for-docker-images#example-of-updated-workflow
+        env: # Or as an environment variable
+          ACCESS_TOKEN_FOR_DOCKER: ${{ secrets.ACCESS_TOKEN_FOR_DOCKER }}
         run: |
           export IMAGE_NAME=ghcr.io/${GITHUB_REPOSITORY}
           echo "${ACCESS_TOKEN_FOR_DOCKER}" | docker login https://ghcr.io --password-stdin -u "aj.steers@slalom.com"
